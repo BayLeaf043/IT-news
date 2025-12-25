@@ -5,13 +5,19 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
+    'name' => 'ITNP | IT News Portal',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    'timeZone' => 'Europe/Kyiv',
     'components' => [
+        'formatter' => [
+            'defaultTimeZone' => 'Europe/Kyiv',
+            'timeZone' => 'Europe/Kyiv',
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '68254611',
@@ -43,14 +49,19 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
-        'urlManager' => [
+        
+        /*'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-            ],
-        ],
-        */
+                // Адмінка: /admin -> admin/admin/index
+                'admin' => 'admin/admin/index',
+                'admin/<controller:\w+>' => 'admin/<controller>/index',
+                'admin/<controller:\w+>/<action:\w+>' => 'admin/<controller>/<action>',
+                'admin/<controller:\w+>/<action:\w+>/<id:\d+>' => 'admin/<controller>/<action>',
+           ],
+        ],*/
+        
     ],
     'params' => $params,
 ];
@@ -61,14 +72,14 @@ if (YII_ENV_DEV) {
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 }
 

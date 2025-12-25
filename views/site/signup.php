@@ -1,14 +1,9 @@
 <?php
 
-/** @var yii\web\View $this */
-/** @var yii\bootstrap5\ActiveForm $form */
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
-/** @var app\models\LoginForm $model */
-
-use yii\bootstrap5\ActiveForm;
-use yii\bootstrap5\Html;
-
-$this->title = 'Вхід до системи';
+$this->title = 'Реєстрація';
 
 ?>
 
@@ -36,7 +31,7 @@ $this->title = 'Вхід до системи';
         box-shadow: none;
     }
 
-    .has-error .help-block {
+    has-error .help-block {
         color: #e74c3c;
         font-size: 13px;
         margin-top: 5px;
@@ -52,25 +47,26 @@ $this->title = 'Вхід до системи';
 </style>
 
     <div class="form-wrapper">
-
     <h2><?= Html::encode($this->title) ?></h2>
 
-    <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'signup-form',
+    ]); ?>
 
         <?= $form->field($model, 'username')
-            ->textInput(['placeholder' => 'Логін', 'autofocus' => true]) ?>
+            ->textInput(['placeholder' => 'Ваше імʼя']) ?>
+
+        <?= $form->field($model, 'email')
+            ->textInput(['placeholder' => 'Email']) ?>
 
         <?= $form->field($model, 'password')
             ->passwordInput(['placeholder' => 'Пароль']) ?>
 
-        <?= $form->field($model, 'rememberMe')->checkbox() ?>
-
         <div class="form-group">
-            <?= Html::submitButton('Увійти', [
-                'class' => 'btn btn-success'
+            <?= Html::submitButton('Зареєструватися', [
+                'class' => 'btn btn-primary'
             ]) ?>
         </div>
 
     <?php ActiveForm::end(); ?>
 </div>
-

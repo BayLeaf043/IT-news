@@ -37,20 +37,28 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top']
     ]);
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav'],
+        'options' => ['class' => 'navbar-nav ms-auto'], // ms-auto щоб було справа (Bootstrap 5)
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
+
             Yii::$app->user->isGuest
                 ? ['label' => 'Login', 'url' => ['/site/login']]
-                : '<li class="nav-item">'
-                    . Html::beginForm(['/site/logout'])
-                    . Html::submitButton(
-                        'Logout (' . Yii::$app->user->identity->username . ')',
-                        ['class' => 'nav-link btn btn-link logout']
-                    )
-                    . Html::endForm()
-                    . '</li>'
-        ]
+                : [
+                    'label' => Yii::$app->user->identity->username,
+                    'url' => '#',
+                    'items' => [
+                        [
+                            'label' => 'Logout',
+                            'url' => ['/site/logout'],
+                            'linkOptions' => ['data-method' => 'post'],
+                        ],
+                    ],
+                ],
+
+            Yii::$app->user->isGuest
+                ? ['label' => 'Signup', 'url' => ['/site/signup']]
+                : '',
+        ],
     ]);
     NavBar::end();
     ?>

@@ -9,6 +9,9 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\SignupForm;
+use app\models\Article;
+use yii\data\Pagination;
+use yii\web\NotFoundHttpException;
 
 class SiteController extends Controller
 {
@@ -61,8 +64,58 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $query = Article::find()
+            ->where(['status' => 1])
+            ->with('category')
+            ->orderBy(['created_at' => SORT_DESC]);
+
+        $pagination = new Pagination([
+            'pageSize' => \Yii::$app->user->isGuest ? 5 : 10,
+            'totalCount' => $query->count(),
+        ]);
+
+        $articles = $query
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        return $this->render('index', [
+            'articles' => $articles,
+            'pagination' => $pagination,
+            'isGuestLimited' => \Yii::$app->user->isGuest,
+        ]);
     }
+
+
+    public function actionView($id)
+    {
+        $model = Article::find()
+            ->where(['id' => $id, 'status' => 1])
+            ->with(['category', 'author', 'tags'])
+            ->one();
+
+        if (!$model) {
+            throw new NotFoundHttpException('Article not found.');
+        }
+
+        // +1 view (захист від накрутки при F5)
+        $sessionKey = 'viewed_article_' . $model->id;
+        if (!Yii::$app->session->has($sessionKey)) {
+            $model->updateCounters(['views' => 1]);
+            Yii::$app->session->set($sessionKey, true);
+            $model->refresh(); // щоб одразу показало оновлені views
+        }
+
+        // коментарі поки не виводимо, але число можемо порахувати
+        $commentsCount = $model->getComments()->where(['status' => 1])->count();
+
+        return $this->render('view', [
+            'model' => $model,
+            'commentsCount' => $commentsCount,
+        ]);
+    }
+
+
 
     /**
      * Login action.

@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = 'Реєстрація';
+$this->title = 'Sign Up';
 
 ?>
 
@@ -54,16 +54,16 @@ $this->title = 'Реєстрація';
     ]); ?>
 
         <?= $form->field($model, 'username')
-            ->textInput(['placeholder' => 'Ваше імʼя']) ?>
+            ->textInput(['placeholder' => 'Your name']) ?>
 
         <?= $form->field($model, 'email')
             ->textInput(['placeholder' => 'Email']) ?>
 
         <?= $form->field($model, 'password')
-            ->passwordInput(['placeholder' => 'Пароль']) ?>
+            ->passwordInput(['placeholder' => 'Password']) ?>
 
         <div class="form-group">
-            <?= Html::submitButton('Зареєструватися', [
+            <?= Html::submitButton('Sign up', [
                 'class' => 'btn btn-primary'
             ]) ?>
         </div>

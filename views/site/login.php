@@ -8,7 +8,7 @@
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
-$this->title = 'Вхід до системи';
+$this->title = 'Log In';
 
 ?>
 
@@ -58,15 +58,15 @@ $this->title = 'Вхід до системи';
     <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
         <?= $form->field($model, 'username')
-            ->textInput(['placeholder' => 'Логін', 'autofocus' => true]) ?>
+            ->textInput(['placeholder' => 'Login', 'autofocus' => true]) ?>
 
         <?= $form->field($model, 'password')
-            ->passwordInput(['placeholder' => 'Пароль']) ?>
+            ->passwordInput(['placeholder' => 'Password']) ?>
 
         <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
         <div class="form-group">
-            <?= Html::submitButton('Увійти', [
+            <?= Html::submitButton('Log in', [
                 'class' => 'btn btn-success'
             ]) ?>
         </div>

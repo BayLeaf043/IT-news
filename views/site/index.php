@@ -11,50 +11,23 @@ use yii\helpers\StringHelper;
 /** @var array $articles */
 /** @var yii\data\Pagination|null $pagination */
 /** @var bool $isGuestLimited */
+/** @var string $pageTitle */
+/** @var string $q */
 
-$this->title = 'ITN | IT News';
+$this->title = $pageTitle;
 $this->registerCssFile('@web/css/article.css');
 ?>
-<h1><?= Html::encode($this->title) ?></h1>
 
-<?php foreach ($articles as $article): ?>
-    <a class="article-card-link" href="<?= Url::to(['site/view', 'id' => $article->id]) ?>">
-        <div class="article-card">
-            
-            <?php if ($article->category): ?>
-                <div class="article-topic"><?= Html::encode($article->category->title) ?></div>
-            <?php endif; ?>
+<h1><?= Html::encode($pageTitle ?? $this->title) ?></h1>
 
-            <h2 class="article-title"><?= Html::encode($article->title) ?></h2>
+<?= $this->render('articleList', [
+    'articles' => $articles,
+    'pagination' => $pagination,
+    'isGuestLimited' => $isGuestLimited,
+]) ?>
 
-            <div class="article-preview">
-                <?= Html::encode(mb_strimwidth(strip_tags($article->content), 0, 200, '...')) ?>
-            </div>
-
-            <div class="article-meta">
-                <span class="article-date">
-                    Published: <?= Yii::$app->formatter->asDatetime($article->created_at, 'php:d.m.Y H:i') ?>
-                </span>
-
-                <div class="article-stats">
-                    <span class="article-views">
-                        👀 <?= (int)$article->views ?>
-                    </span>
-                    <span class="article-comments">
-                        💬 <?= $article->getComments()->where(['status' => 1])->count() ?>
-                    </span>
-                </div>
-            </div>
-        </div>
-        </a>
-<?php endforeach; ?>
-
-<?php if ($isGuestLimited): ?>
-    <div class="guest-more">
-        <p>To read more articles — log in or register.</p>
-        <?= Html::a('Log in', ['/site/login'], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Sign up', ['/site/signup'], ['class' => 'btn btn-success']) ?>
+<?php if (empty($articles)): ?>
+    <div class="alert alert-info mt-3">
+        Nothing found<?= $q ? ' for: <b>' . Html::encode($q) . '</b>' : '' ?>.
     </div>
-<?php elseif ($pagination): ?>
-    <?= \yii\widgets\LinkPager::widget(['pagination' => $pagination]) ?>
 <?php endif; ?>

@@ -129,13 +129,21 @@ class TagController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->getArticleTags()->count() > 0) {
-            \Yii::$app->session->setFlash('error', 'The tag cannot be deleted because it is associated with articles.');
-            return $this->redirect(['view', 'id' => $model->id]);
+        $linksCount = $model->getArticleTags()->count();
+
+        if ($linksCount > 0) {
+            // видаляємо всі зв’язки тег - статті
+            \app\models\ArticleTag::deleteAll(['tag_id' => $model->id]);
+
+            Yii::$app->session->setFlash(
+                'warning',
+                "The tag was linked to {$linksCount} article(s). All links were removed."
+            );
         }
 
         $model->delete();
-        \Yii::$app->session->setFlash('success', 'Tag deleted successfully.');
+
+        Yii::$app->session->setFlash('success', 'Tag deleted successfully.');
         return $this->redirect(['index']);
     }
 

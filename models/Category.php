@@ -21,6 +21,7 @@ class Category extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    // таблиця в БД
     public static function tableName()
     {
         return 'category';
@@ -29,6 +30,7 @@ class Category extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    // правила валідації
     public function rules()
     {
         return [
@@ -38,6 +40,7 @@ class Category extends \yii\db\ActiveRecord
         ];
     }
 
+    // автоматичне заповнення created_at
     public function behaviors()
     {
         return [
@@ -52,6 +55,7 @@ class Category extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    // підписи атрибутів
     public function attributeLabels()
     {
         return [
@@ -66,6 +70,7 @@ class Category extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
+    // зв'язок з статтями
     public function getArticles()
     {
         return $this->hasMany(Article::class, ['category_id' => 'id']);

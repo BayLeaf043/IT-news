@@ -9,6 +9,8 @@ use yii\filters\VerbFilter;
 
 class AdminController extends Controller
 {
+    // обмежує доступ лише для авторизованих користувачів, які мають роль адміністратора (is_admin = 1)
+
     public function behaviors()
     {
         return [
@@ -24,6 +26,8 @@ class AdminController extends Controller
                         },
                     ],
                 ],
+                // Повідомлення у випадку спроби доступу без прав адміністратора
+
                 'denyCallback' => function () {
                     throw new ForbiddenHttpException('You are not allowed to access this page.');
                 },
@@ -37,6 +41,7 @@ class AdminController extends Controller
         ];
     }
 
+    // головна сторінка адміністративної панелі (керування статтями, категоріями, тегами та коментарями)
     public function actionIndex()
     {
         return $this->render('index');

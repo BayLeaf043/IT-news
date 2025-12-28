@@ -19,6 +19,8 @@ class CommentController extends Controller
     /**
      * @inheritDoc
      */
+
+    // обмежує доступ лише для авторизованих користувачів, які мають роль адміністратора (is_admin = 1)
     public function behaviors()
     {
         return [
@@ -34,6 +36,7 @@ class CommentController extends Controller
                         },
                     ],
                 ],
+                // Повідомлення у випадку спроби доступу без прав адміністратора
                 'denyCallback' => function () {
                     throw new ForbiddenHttpException('You are not allowed to access this page.');
                 },
@@ -52,6 +55,8 @@ class CommentController extends Controller
      *
      * @return string
      */
+
+    // Перегляд списку коментарів в адмін-панелі
     public function actionIndex()
     {
         $searchModel = new CommentSearch();
@@ -69,6 +74,8 @@ class CommentController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
+
+    // Перегляд одного коментаря в адмін-панелі
     public function actionView($id)
     {
         return $this->render('view', [
@@ -81,6 +88,8 @@ class CommentController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
+
+    // Створення нового коментаря в адмін-панелі відсутнє
     public function actionCreate()
     {
        throw new NotFoundHttpException();
@@ -93,6 +102,8 @@ class CommentController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
+
+    // Оновлення існуючого коментаря в адмін-панелі
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -113,6 +124,8 @@ class CommentController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
+
+    // Видалення коментаря в адмін-панелі
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -135,6 +148,8 @@ class CommentController extends Controller
      * @return Comment the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
+
+    // Допоміжний метод для пошуку коментаря за ID
     protected function findModel($id)
     {
         if (($model = Comment::findOne(['id' => $id])) !== null) {

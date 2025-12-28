@@ -11,6 +11,7 @@ $currentCategoryId = Yii::$app->request->get('category_id');
 $q = Yii::$app->request->get('q');
 ?>
 
+<!-- Панель категорій для фільтрації статей -->
 <div class="category-bar">
     <div class="category-bar-inner">
         <?= Html::a('All', ['/site/index', 'q' => $q], [

@@ -19,6 +19,7 @@ class LoginForm extends Model
 
     private ?User $_user = null;
 
+    // правила валідації
     public function rules(): array
     {
         return [
@@ -28,6 +29,7 @@ class LoginForm extends Model
         ];
     }
 
+    // підписи атрибутів
     public function attributeLabels(): array
     {
         return [
@@ -37,6 +39,7 @@ class LoginForm extends Model
         ];
     }
 
+    // перевірка пароля
     public function validatePassword($attribute, $params): void
     {
         if ($this->hasErrors()) return;
@@ -47,6 +50,7 @@ class LoginForm extends Model
         }
     }
 
+    // логін користувача
     public function login(): bool
     {
         if ($this->validate()) {
@@ -58,6 +62,7 @@ class LoginForm extends Model
         return false;
     }
 
+    // отримання користувача за логіном
     private function getUser(): ?User
     {
         if ($this->_user === null) {

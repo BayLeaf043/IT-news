@@ -13,6 +13,7 @@ $this->registerCssFile('@web/css/article.css');
 
 <h1><?= Html::encode($pageTitle) ?></h1>
 
+<!-- Список статей з певним тегом -->
 <?= $this->render('articleList', [
     'articles' => $articles,
     'pagination' => $pagination,

@@ -51,6 +51,7 @@ $this->title = 'Log In';
     }
 </style>
 
+<!-- Форма входу користувача -->
     <div class="form-wrapper">
 
     <h2><?= Html::encode($this->title) ?></h2>

@@ -21,6 +21,7 @@ class ArticleTag extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    // таблиця в БД
     public static function tableName()
     {
         return 'article_tag';
@@ -29,6 +30,7 @@ class ArticleTag extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    // правила валідації
     public function rules()
     {
         return [
@@ -43,6 +45,7 @@ class ArticleTag extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    // підписи атрибутів
     public function attributeLabels()
     {
         return [
@@ -57,6 +60,7 @@ class ArticleTag extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
+    // зв'язок з статтею
     public function getArticle()
     {
         return $this->hasOne(Article::class, ['id' => 'article_id']);
@@ -67,6 +71,7 @@ class ArticleTag extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
+    // зв'язок з тегом
     public function getTag()
     {
         return $this->hasOne(Tag::class, ['id' => 'tag_id']);

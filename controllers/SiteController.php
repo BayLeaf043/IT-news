@@ -20,6 +20,8 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
+
+    // обмежує logout тільки для авторизованих користувачів. comment-create також зроблений POST.
     public function behaviors()
     {
         return [
@@ -47,6 +49,8 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
+
+    // Службові дії (error/captcha), стандартні для Yii2 basic.
     public function actions()
     {
         return [
@@ -65,6 +69,8 @@ class SiteController extends Controller
      *
      * @return string
      */
+
+    // Відображення головної сторінки з переліком статей, фільтрація по категорії та пошук.
     public function actionIndex()
     {
         $categoryId = (int)Yii::$app->request->get('category_id');
@@ -124,6 +130,7 @@ class SiteController extends Controller
     }
 
 
+    // Відображення однієї статті з усіма деталями, лічильником переглядів, коментарями та пов'язаними статтями.
     public function actionView($id)
     {
         $model = Article::find()
@@ -186,6 +193,8 @@ class SiteController extends Controller
      *
      * @return Response|string
      */
+
+    // Вхід користувача
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
@@ -203,6 +212,7 @@ class SiteController extends Controller
         ]);
     }
 
+    // Реєстрація користувача
     public function actionSignup()
     {
         if (!Yii::$app->user->isGuest) {
@@ -226,6 +236,8 @@ class SiteController extends Controller
      *
      * @return Response
      */
+
+    // Вихід користувача
     public function actionLogout()
     {
         Yii::$app->user->logout();
@@ -234,6 +246,7 @@ class SiteController extends Controller
     }
 
 
+    // Додавання коментаря до статті
     public function actionCommentCreate($id)
     {
         if (Yii::$app->user->isGuest) {
@@ -262,6 +275,7 @@ class SiteController extends Controller
     }
 
 
+    // Сторінка перегляду статей за тегом (клікабельні #hashtags)
     public function actionTag($tag)
     {
         $tag = trim((string)$tag);

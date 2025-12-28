@@ -9,6 +9,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <h1><?= Html::encode($this->title) ?></h1>
 
+<!-- Навігаційне меню адміністративної панелі -->
 <div class="list-group" style="max-width: 520px;">
     <?= Html::a('Articles', ['/article/index'], ['class' => 'list-group-item list-group-item-action']) ?>
     <?= Html::a('Categories', ['/category/index'], ['class' => 'list-group-item list-group-item-action']) ?>

@@ -52,8 +52,10 @@ if ($imgUrl) {
 }
 ?>
 
+<!-- Сторінка перегляду окремої статті -->
 <div class="article-page">
 
+    <!-- Заголовок та метаінформація статті -->
     <div class="article-top">
         <?php if ($model->category): ?>
             <span class="article-topic"><?= Html::encode($model->category->title) ?></span>
@@ -77,17 +79,20 @@ if ($imgUrl) {
 
     <h1 class="article-h1"><?= Html::encode($model->title) ?></h1>
 
+    <!-- Зображення -->
     <?php if (!empty($model->image)): ?>
         <div class="article-image">
             <?= Html::img('@web/' . ltrim($model->image, '/'), ['alt' => $model->title]) ?>
         </div>
     <?php endif; ?>
 
+    <!-- Вміст статті -->
     <div class="article-content">
         <?= nl2br(Html::encode($model->content)) ?>
     </div>
 
 
+    <!-- Теги статті -->
     <?php if (!empty($model->tags)): ?>
         <div class="article-tags">
             <?php foreach ($model->tags as $tag): ?>
@@ -99,6 +104,7 @@ if ($imgUrl) {
     <?php endif; ?>
 
 
+    <!-- Блок поширення та обговорення -->
     <div class="share-box">
         <div class="share-title">Share:</div>
 
@@ -120,7 +126,7 @@ if ($imgUrl) {
         </div>
     </div>
 
-
+    <!-- Блок обговорення -->
     <div id="discussion" class="discussion">
         <h3 class="discussion-title">Discussion (<?= (int)$commentsCount ?>)</h3>
 
@@ -202,7 +208,7 @@ if ($imgUrl) {
 
 </div>
 
-
+<!-- JS для обробки відповіді на коментар -->
 <?php
 $js = <<<JS
 document.addEventListener('click', function(e){

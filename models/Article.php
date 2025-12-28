@@ -37,6 +37,7 @@ class Article extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    // таблиця в БД
     public static function tableName()
     {
         return 'article';
@@ -45,6 +46,7 @@ class Article extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    // правила валідації
     public function rules()
     {
         return [
@@ -67,6 +69,7 @@ class Article extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    // підписи для полів
     public function attributeLabels()
     {
         return [
@@ -89,6 +92,7 @@ class Article extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
+    // зв'язок з проміжною таблицею article_tag
     public function getArticleTags()
     {
         return $this->hasMany(ArticleTag::class, ['article_id' => 'id']);
@@ -99,6 +103,7 @@ class Article extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
+    // зв'язок з автором статті
     public function getAuthor()
     {
         return $this->hasOne(User::class, ['id' => 'author_id']);
@@ -109,6 +114,7 @@ class Article extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
+    // зв'язок з категорією статті
     public function getCategory()
     {
         return $this->hasOne(Category::class, ['id' => 'category_id']);
@@ -119,6 +125,7 @@ class Article extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
+    // зв'язок з коментарями статті
     public function getComments()
     {
         return $this->hasMany(Comment::class, ['article_id' => 'id']);
@@ -129,11 +136,13 @@ class Article extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
+    // зв'язок з тегами статті через проміжну таблицю article_tag
     public function getTags()
     {
         return $this->hasMany(Tag::class, ['id' => 'tag_id'])->viaTable('article_tag', ['article_id' => 'id']);
     }
 
+    // після завантаження моделі зі сторінки редагування
     public function afterFind()
     {
         parent::afterFind();
@@ -141,6 +150,7 @@ class Article extends \yii\db\ActiveRecord
         $this->tags_input = implode(' ', array_map(fn($t) => '#'.$t->title, $this->tags));
     }
 
+    // після видалення статті
     public function afterDelete()
     {
         parent::afterDelete();
@@ -154,6 +164,7 @@ class Article extends \yii\db\ActiveRecord
     }
 
 
+    // розбір рядка з тегами/хештегами
     public static function parseTags(string $input): array
     {
         $input = trim($input);
@@ -176,6 +187,7 @@ class Article extends \yii\db\ActiveRecord
         return $tags;
     }
 
+    // збереження тегів зі сторінки редагування
     public function saveTagsFromInput(): void
     {
         $tagNames = self::parseTags($this->tags_input);
@@ -199,6 +211,7 @@ class Article extends \yii\db\ActiveRecord
         }
     }
 
+    // перед збереженням моделі
     public function beforeSave($insert)
     {
         if (!parent::beforeSave($insert)) {

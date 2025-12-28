@@ -27,6 +27,7 @@ class Comment extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    // таблиця в БД
     public static function tableName()
     {
         return 'comment';
@@ -35,6 +36,7 @@ class Comment extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    // правила валідації
     public function rules()
     {
         return [
@@ -51,6 +53,7 @@ class Comment extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    // підписи атрибутів
     public function attributeLabels()
     {
         return [
@@ -69,6 +72,7 @@ class Comment extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
+    // зв'язок з статтею
     public function getArticle()
     {
         return $this->hasOne(Article::class, ['id' => 'article_id']);
@@ -79,6 +83,7 @@ class Comment extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
+    // зв'язок з відповідями на коментар
     public function getComments()
     {
         return $this->hasMany(Comment::class, ['parent_id' => 'id']);
@@ -89,6 +94,7 @@ class Comment extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
+    // зв'язок з батьківським коментарем
     public function getParent()
     {
         return $this->hasOne(Comment::class, ['id' => 'parent_id']);
@@ -104,6 +110,7 @@ class Comment extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
+    // зв'язок з користувачем
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);

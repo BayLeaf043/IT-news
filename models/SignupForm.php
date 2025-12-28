@@ -11,6 +11,7 @@ class SignupForm extends Model
     public $email;
     public $password;
 
+    // правила валідації
     public function rules(): array
     {
         return [
@@ -26,6 +27,7 @@ class SignupForm extends Model
         ];
     }
 
+    // підписи атрибутів
     public function attributeLabels(): array
     {
         return [
@@ -35,6 +37,7 @@ class SignupForm extends Model
         ];
     }
 
+    // реєстрація користувача
     public function signup(): ?User
     {
         if (!$this->validate()) return null;

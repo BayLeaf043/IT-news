@@ -7,6 +7,7 @@ use yii\helpers\Url;
 /** @var bool $isGuestLimited */
 ?>
 
+<!-- Список статей -->
 <?php foreach ($articles as $article): ?>
     <a class="article-card-link" href="<?= Url::to(['site/view', 'id' => $article->id]) ?>">
         <div class="article-card">
@@ -39,6 +40,7 @@ use yii\helpers\Url;
         </a>
 <?php endforeach; ?>
 
+<!-- Повідомлення для гостей та пагінація -->
 <?php if ($isGuestLimited): ?>
     <div class="guest-more">
         <p>To read more articles — log in or register.</p>

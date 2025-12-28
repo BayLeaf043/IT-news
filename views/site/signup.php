@@ -46,6 +46,7 @@ $this->title = 'Sign Up';
     }
 </style>
 
+<!-- Форма реєстрації користувача -->
     <div class="form-wrapper">
     <h2><?= Html::encode($this->title) ?></h2>
 

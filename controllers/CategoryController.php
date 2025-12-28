@@ -19,6 +19,9 @@ class CategoryController extends Controller
     /**
      * @inheritDoc
      */
+
+    // обмежує доступ лише для авторизованих користувачів, які мають роль адміністратора (is_admin = 1)
+
     public function behaviors()
     {
         return [
@@ -34,6 +37,8 @@ class CategoryController extends Controller
                         },
                     ],
                 ],
+                // Повідомлення у випадку спроби доступу без прав адміністратора
+
                 'denyCallback' => function () {
                     throw new ForbiddenHttpException('You are not allowed to access this page.');
                 },
@@ -52,6 +57,8 @@ class CategoryController extends Controller
      *
      * @return string
      */
+
+    // Перегляд списку категорій в адмін-панелі
     public function actionIndex()
     {
         $searchModel = new CategorySearch();
@@ -69,6 +76,8 @@ class CategoryController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
+
+    // Перегляд однієї категорії в адмін-панелі
     public function actionView($id)
     {
         return $this->render('view', [
@@ -81,6 +90,8 @@ class CategoryController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
+
+    // Створення нової категорії в адмін-панелі
     public function actionCreate()
     {
         $model = new Category();
@@ -105,6 +116,8 @@ class CategoryController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
+
+    // Оновлення існуючої категорії в адмін-панелі
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -125,6 +138,8 @@ class CategoryController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
+
+    // Видалення категорії
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
@@ -146,6 +161,8 @@ class CategoryController extends Controller
      * @return Category the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
+
+    // Допоміжний метод для пошуку категорії за ID
     protected function findModel($id)
     {
         if (($model = Category::findOne(['id' => $id])) !== null) {

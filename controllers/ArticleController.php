@@ -20,6 +20,9 @@ class ArticleController extends Controller
     /**
      * @inheritDoc
      */
+
+    // обмежує доступ лише для авторизованих користувачів, які мають роль адміністратора (is_admin = 1)
+
     public function behaviors()
     {
         return [
@@ -35,6 +38,8 @@ class ArticleController extends Controller
                         },
                     ],
                 ],
+                // Повідомлення у випадку спроби доступу без прав адміністратора
+                
                 'denyCallback' => function () {
                     throw new ForbiddenHttpException('You are not allowed to access this page.');
                 },
@@ -53,6 +58,8 @@ class ArticleController extends Controller
      *
      * @return string
      */
+
+    // Відображення списку всіх статей у адмін-панелі
     public function actionIndex()
     {
         $searchModel = new ArticleSearch();
@@ -70,6 +77,8 @@ class ArticleController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
+
+    // Перегляд однієї статті в адмін-панелі
     public function actionView($id)
     {
         return $this->render('view', [
@@ -82,10 +91,13 @@ class ArticleController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
+
+    // Створення нової статті в адмін-панелі
     public function actionCreate()
     {
         $model = new Article();
 
+        // автоматично прив’язуємо автора
         $model->author_id = \Yii::$app->user->id;
 
         if ($this->request->isPost && $model->load($this->request->post())) {
@@ -102,11 +114,13 @@ class ArticleController extends Controller
                 $filePath = $uploadDir . DIRECTORY_SEPARATOR . $fileName;
 
                 if ($model->imageFile->saveAs($filePath)) {
-                    $model->image = 'uploads/' . $fileName; // це піде в БД
+                    $model->image = 'uploads/' . $fileName; // шлях піде в БД
                 }
             }
 
             if ($model->save()) {
+
+                // збереження хештегів та зв’язків article_tag
                 $model->saveTagsFromInput();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -125,6 +139,8 @@ class ArticleController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
+
+    // Оновлення існуючої статті
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -169,6 +185,8 @@ class ArticleController extends Controller
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
+
+    // Видалення статті
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
@@ -183,6 +201,8 @@ class ArticleController extends Controller
      * @return Article the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
+
+    // Допоміжний метод для пошуку статті за ID
     protected function findModel($id)
     {
         if (($model = Article::findOne(['id' => $id])) !== null) {

@@ -14,7 +14,7 @@ return [
     ],
     'language' => 'en-US',
     'components' => [
-        'db' => $db,
+        'db' => require __DIR__ . '/db_test.php',
         'mailer' => [
             'class' => \yii\symfonymailer\Mailer::class,
             'viewPath' => '@app/mail',
